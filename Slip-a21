@@ -1,0 +1,130 @@
+//  Define a class MyDate(Day, Month, year) with methods to accept and display a 
+// MyDateobject. Accept date as dd,mm,yyyy. Throw user defined exception 
+// "InvalidDateException" if the date is invalid. import java.util.Scanner;
+
+class InvalidDateException extends Exception {
+    public InvalidDateException(String message) {
+        super(message);
+    }
+}
+
+class MyDate {
+    int day, month, year;
+
+    public void accept() {
+        System.out.println("Enter Date (dd mm yyyy):");
+        Scanner sc = new Scanner(System.in);
+        
+        try {
+            day = sc.nextInt();
+            month = sc.nextInt();
+            year = sc.nextInt();
+
+            if (month < 1 || month > 12) {
+                throw new InvalidDateException("Invalid month entered.");
+            }
+
+            // Check for days in each month
+            if (day < 1 || day > getDaysInMonth(month, year)) {
+                throw new InvalidDateException("Invalid day entered.");
+            }
+
+            if (year < 1000 || year > 9999) {
+                throw new InvalidDateException("Invalid year entered.");
+            }
+        } catch (InvalidDateException e) {
+            System.out.println(e.getMessage());
+            System.exit(0);
+        } catch (Exception e) {
+            System.out.println("Please enter valid integers for date, month, and year.");
+            System.exit(0);
+        }
+    }
+
+    private int getDaysInMonth(int month, int year) {
+        switch (month) {
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                return 31;
+            case 4: case 6: case 9: case 11:
+                return 30;
+            case 2:
+                return (isLeapYear(year)) ? 29 : 28;
+            default:
+                return 0; // Should not reach here
+        }
+    }
+
+    private boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    public void display() {
+        System.out.printf("Entered Date is: %02d/%02d/%d%n", day, month, year);
+    }
+
+    public static void main(String args[]) {
+        MyDate ob = new MyDate();
+        ob.accept();
+        ob.display();
+    }
+}
+
+
+//javac MyDate.java
+//java MyDate
+
+
+// Create an employee class(id,name,deptname,salary). Define a default and 
+// parameterized constructor. Use ‘this’ keyword to initialize instance variables. Keep a 
+// count of objects created. Create objects using parameterized constructor and display the 
+// object count after each object is created. (Use static member and method). Also display 
+// the contents of each object. 
+
+class Employee {
+    int id; 
+    String name, deptname; 
+    double sal; 
+    static int cnt = 0; 
+
+    // Default constructor
+    Employee() { 
+        cnt++; 
+        displayCount(); 
+    } 
+
+    // Parameterized constructor
+    Employee(int id, String name, String deptname, double sal) { 
+        this.id = id; 
+        this.name = name; 
+        this.deptname = deptname; 
+        this.sal = sal; 
+        cnt++; 
+        displayCount(); 
+    } 
+
+    // Static method to display the count of objects created
+    public static void displayCount() { 
+        System.out.println("Total Objects created: " + cnt); 
+    } 
+
+    // Method to display the employee data
+    public void displayData() { 
+        System.out.println(this.id + "\t\t" + this.name + "\t\t\t" + this.deptname + "\t\t" + this.sal); 
+    } 
+
+    // Main method
+    public static void main(String args[]) { 
+        Employee e1 = new Employee(101, "Maithili", "HR", 120020.20); 
+        Employee e2 = new Employee(102, "Soham", "IT", 140020.20); 
+        Employee e3 = new Employee(104, "Akshay", "Accounts", 100020.20); 
+
+        System.out.println("EID\t\tName\t\t\tDepartment\t\tSalary"); 
+        e1.displayData(); 
+        e2.displayData(); 
+        e3.displayData(); 
+    } 
+}
+
+
+//javac Employee.java
+//java Employee
