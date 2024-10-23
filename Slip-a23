@@ -1,0 +1,154 @@
+// 1: Define a class MyNumber having one private int data member. Write a default 
+// constructor to initialize it to 0 and another constructor to initialize it to a value (Use 
+// this). Write methods isNegative, isPositive, isZero, isOdd, isEven. Create an object in 
+// main.Use command line arguments to pass a value to the Object 
+class MyNumber {
+    private int data;
+
+    // Default constructor
+    MyNumber() {
+        data = 0;
+    }
+
+    // Parameterized constructor
+    MyNumber(int data) {
+        this.data = data; // Initialize data using this
+    }
+
+    // Method to check if the number is positive
+    public void isPositive() {
+        if (data > 0) {
+            System.out.println(data + " is Positive");
+        }
+    }
+
+    // Method to check if the number is negative
+    public void isNegative() {
+        if (data < 0) {
+            System.out.println(data + " is Negative");
+        }
+    }
+
+    // Method to check if the number is zero
+    public void isZero() {
+        if (data == 0) {
+            System.out.println(data + " is Zero");
+        }
+    }
+
+    // Method to check if the number is even
+    public void isEven() {
+        if (data % 2 == 0) {
+            System.out.println(data + " is Even");
+        }
+    }
+
+    // Method to check if the number is odd
+    public void isOdd() {
+        if (data % 2 != 0) {
+            System.out.println(data + " is Odd");
+        }
+    }
+
+    public static void main(String args[]) {
+        // Ensure that a command line argument is provided
+        if (args.length == 0) {
+            System.out.println("Please provide a number as a command line argument.");
+            return;
+        }
+
+        int data = Integer.parseInt(args[0]);
+        MyNumber ob = new MyNumber(data);
+        ob.isPositive();
+        ob.isNegative();
+        ob.isEven();
+        ob.isOdd();
+        ob.isZero();
+    }
+}
+
+
+//javac MyNumber.java
+//java MyNumber
+
+
+// Write a simple currency converter, as shown in the figure. User can 
+// enter the amount of "Singapore Dollars", "US Dollars", or "Euros", in 
+// floating-point number. The converted values shall be displayed to 2 decimal 
+// places. Assume that 1 USD = 1.41 SGD, 
+// 1 USD = 0.92 Euro, 1 SGD = 0.65 Euro import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class CurrencyConverter extends JFrame implements KeyListener {
+    JLabel l1, l2, l3;
+    JTextField t1, t2, t3;
+
+    CurrencyConverter() {
+        // Set up the frame
+        setTitle("Currency Converter");
+        setLayout(new FlowLayout());
+        setSize(300, 200);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        // Create labels and text fields
+        l1 = new JLabel("US Dollars:");
+        l2 = new JLabel("Singapore Dollars:");
+        l3 = new JLabel("Euros:");
+
+        t1 = new JTextField(10);
+        t2 = new JTextField(10);
+        t3 = new JTextField(10);
+
+        // Disable editing for converted fields
+        t2.setEditable(false);
+        t3.setEditable(false);
+
+        // Add components to the frame
+        add(l1);
+        add(t1);
+        add(l2);
+        add(t2);
+        add(l3);
+        add(t3);
+
+        // Add key listener
+        t1.addKeyListener(this);
+
+        // Make the frame visible
+        setVisible(true);
+    }
+
+    public void keyReleased(KeyEvent ke) {
+        try {
+            // Get the input from the US Dollars field
+            double USD = Double.parseDouble(t1.getText());
+            double SGD = USD * 1.41; // Conversion rate for SGD
+            double Euro = USD * 0.92; // Conversion rate for Euro
+
+            // Set the converted values in the text fields with 2 decimal places
+            t2.setText(String.format("%.2f", SGD));
+            t3.setText(String.format("%.2f", Euro));
+        } catch (NumberFormatException e) {
+            // Handle invalid input
+            t2.setText("");
+            t3.setText("");
+        }
+    }
+
+    public void keyTyped(KeyEvent ke) {
+        // Not used
+    }
+
+    public void keyPressed(KeyEvent ke) {
+        // Not used
+    }
+
+    public static void main(String[] args) {
+        new CurrencyConverter();
+    }
+}
+
+
+//javac CurrencyConverter.java
+//java CurrencyConverter
