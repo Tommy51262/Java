@@ -1,0 +1,109 @@
+// Q1.  Accept the names of two files and copy the contents of the first to the second. First file 
+// having Book name and Author name in file. 
+ 
+import java.io.*; 
+import java.util.*; 
+  
+ class demoFile 
+{ 
+   public static void main(String args[]) throws Exception
+    { 
+    Scanner  sc= new Scanner(System.in); 
+    System.out.println("Enter the first file"); 
+    String f1=sc.next(); 
+    System.out.println("Enter the second file"); 
+    String f2=sc.next(); 
+    
+    FileInputStream fis=new FileInputStream(f1); 
+    FileOutputStream fos=new FileOutputStream(f2); 
+    int ch; 
+    while((ch=fis.read())!=-1) 
+    { 
+     fos.write(ch); 
+    } 
+    System.out.println("file copied..."); 
+    fis.close(); 
+    fos.close(); 
+   } 
+ } 
+
+Q2.// 
+// Base class
+class Account {
+    protected String custName;
+    protected String accNo;
+
+    // Default constructor
+    public Account() {
+        this.custName = "Unknown";
+        this.accNo = "0000";
+    }
+
+    // Parameterized constructor
+    public Account(String custName, String accNo) {
+        this.custName = custName;
+        this.accNo = accNo;
+    }
+}
+
+// Subclass of Account
+class SavingAccount extends Account {
+    protected double savingBal;
+    protected double minBal;
+
+    // Default constructor
+    public SavingAccount() {
+        super(); // Calls the default constructor of Account
+        this.savingBal = 0.0;
+        this.minBal = 1000.0; // Setting a default minimum balance
+    }
+
+    // Parameterized constructor
+    public SavingAccount(String custName, String accNo, double savingBal, double minBal) {
+        super(custName, accNo); // Calls the parameterized constructor of Account
+        this.savingBal = savingBal;
+        this.minBal = minBal;
+    }
+}
+
+// Derived class from SavingAccount
+class AccountDetail extends SavingAccount {
+    private double depositAmt;
+    private double withdrawalAmt;
+
+    // Default constructor
+    public AccountDetail() {
+        super(); // Calls the default constructor of SavingAccount
+        this.depositAmt = 0.0;
+        this.withdrawalAmt = 0.0;
+    }
+
+    // Parameterized constructor
+    public AccountDetail(String custName, String accNo, double savingBal, double minBal,
+                         double depositAmt, double withdrawalAmt) {
+        super(custName, accNo, savingBal, minBal); // Calls the parameterized constructor of SavingAccount
+        this.depositAmt = depositAmt;
+        this.withdrawalAmt = withdrawalAmt;
+    }
+
+    // Method to display customer details
+    public void displayDetails() {
+        System.out.println("Customer Name: " + custName);
+        System.out.println("Account Number: " + accNo);
+        System.out.println("Saving Balance: " + savingBal);
+        System.out.println("Minimum Balance: " + minBal);
+        System.out.println("Deposit Amount: " + depositAmt);
+        System.out.println("Withdrawal Amount: " + withdrawalAmt);
+    }
+}
+
+// Main class
+public class BankAccountDemo {
+    public static void main(String[] args) {
+        // Creating an instance of AccountDetail
+        AccountDetail accountDetail = new AccountDetail("John Doe", "123456", 1500.0, 1000.0, 200.0, 100.0);
+        
+        // Displaying customer details
+        accountDetail.displayDetails();
+    }
+}
