@@ -1,0 +1,125 @@
+//  Write program to define class Person with data member as 
+// Personname,Aadharno, Panno. Accept information for 5 objects and display appropriate 
+// information (use this keyword). 
+
+import java.util.*; 
+
+class Person { 
+    String personName; 
+    int aadharNo, panNo; 
+
+    // Method to display information of the person
+    public void display() { 
+        System.out.println("Name of the Person: " + personName + 
+                           "    Aadhar number: " + aadharNo + 
+                           "    PAN number: " + panNo); 
+    } 
+
+    // Method to accept information from the user
+    public void accept() { 
+        Scanner sc = new Scanner(System.in); 
+        System.out.print("Enter name of the person: "); 
+        personName = sc.nextLine(); 
+        System.out.print("Enter Aadhar number of the person: "); 
+        aadharNo = sc.nextInt(); 
+        System.out.print("Enter PAN number of the person: "); 
+        panNo = sc.nextInt(); 
+        sc.nextLine(); // Consume newline left-over
+    } 
+} 
+
+public class PersonInfo { 
+    public static void main(String[] args) { 
+        // Create an array to hold 5 Person objects
+        Person[] persons = new Person[5]; 
+        Scanner sc = new Scanner(System.in); 
+
+        // Accept information for each person
+        for (int i = 0; i < persons.length; i++) { 
+            System.out.println("\nEntering details for person " + (i + 1) + ":");
+            persons[i] = new Person(); // Initialize each Person object
+            persons[i].accept(); 
+        } 
+
+        // Display information for each person
+        System.out.println("\nDisplaying information of all persons:");
+        for (Person person : persons) { 
+            person.display(); 
+        } 
+    } 
+}
+
+
+// javac PersonInfo.java
+// java PersonInfo
+
+
+// Write a program that creates a user interface to perform integer divisions. 
+// The user enters two numbers in the text fields, Number1 and Number2. The division of 
+// Number1 and Number2 is displayed in the Result field when the Divide button is 
+// clicked. If Number1 or Number2 were not an integer, the program would throw a 
+// NumberFormatException. If Number2 were Zero, the program would throw an 
+// Arithmetic Exception Display the exception in a message 
+// dialog boximport javax.swing.*; 
+import java.awt.*; 
+import java.awt.event.*; 
+
+class Division extends JFrame implements ActionListener { 
+    JButton btn1; 
+    JTextField t1, t2; 
+    JLabel l1, l2, result; 
+
+    Division() { 
+        // Initialize components
+        t1 = new JTextField(10); 
+        t2 = new JTextField(10);   
+        result = new JLabel();   
+        l1 = new JLabel("Enter First number:"); 
+        l2 = new JLabel("Enter Second number:"); 
+        btn1 = new JButton("Divide");   
+
+        // Add components to the frame
+        setLayout(new FlowLayout()); 
+        add(l1); 
+        add(t1); 
+        add(l2); 
+        add(t2); 
+        add(btn1); 
+        add(result); 
+
+        // Button action listener
+        btn1.addActionListener(this);   
+
+        // Frame properties
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 200); 
+        setVisible(true); 
+    } 
+
+    public void actionPerformed(ActionEvent ae) { 
+        try { 
+            int v1 = Integer.parseInt(t1.getText()); 
+            int v2 = Integer.parseInt(t2.getText()); 
+
+            // Division and display result
+            int ans = v1 / v2; 
+            result.setText("Result: " + ans); 
+        } 
+        catch (NumberFormatException e) { 
+            // Handle non-integer input
+            JOptionPane.showMessageDialog(this, "Enter valid integers!", "Input Error", JOptionPane.ERROR_MESSAGE); 
+        } 
+        catch (ArithmeticException e) {  
+            // Handle division by zero
+            JOptionPane.showMessageDialog(this, "Cannot divide by zero!", "Arithmetic Error", JOptionPane.ERROR_MESSAGE); 
+        } 
+    }   
+
+    public static void main(String args[]) { 
+        new Division(); 
+    } 
+}   
+
+
+// javac Division.java
+// java Division
