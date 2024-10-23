@@ -1,0 +1,125 @@
+// : Define a Item class (item_number, item_name, item_price). Define a default 
+// and parameterized constructor. Keep a count of objects created. Create objects using 
+// parameterized constructor and display the object count after each object is created.(Use 
+// static member and method). Also display the contents of each object 
+class Item {
+    int ino; 
+    String iname; 
+    double iprice; 
+    static int count = 0; // Static variable to count objects
+
+    // Default constructor
+    Item() { 
+    } 
+
+    // Parameterized constructor
+    Item(int no, String nm, double d) { 
+        ino = no; 
+        iname = nm; // Corrected assignment of iname
+        iprice = d; 
+        count++; // Increment count when an object is created
+    } 
+
+    // Method to display item details
+    public void display() { 
+        System.out.println("Item Number: " + ino); 
+        System.out.println("Item Name: " + iname); 
+        System.out.println("Item Price: " + iprice); 
+        System.out.println("Total objects created: " + count); 
+        System.out.println(); // Add a newline for better readability
+    } 
+
+    public static void main(String[] args) { 
+        Item ob1 = new Item(1, "Laptop", 20000.00); 
+        ob1.display(); 
+
+        Item ob2 = new Item(2, "Smartphone", 15000.00); // Changed parameters for clarity
+        ob2.display(); 
+
+        Item ob3 = new Item(3, "Tablet", 10000.00); // Added another item
+        ob3.display(); 
+    } 
+}
+
+// javac Item.java
+// java Item
+
+
+
+// Define a class ‘Donor’ to store the below mentioned details of a blood donor. 
+// name, age, address, contactnumber, bloodgroup, date of last donation. Create ‘n’ objects 
+// of this class for all the regular donors at Pune. Write these objects to a file. Read these 
+// objects from the file and display only those donors’ details whose blood group is ‘A+ve’ 
+// and had not donated for the recent six months. 
+ import java.io.*;
+import java.util.*;
+
+class Donor implements Serializable { // Implement Serializable
+    String name, address, group;
+    int age, contact, lod; // lod: last donation in months
+
+    public Donor(String name, String address, String group, int age, int contact, int lod) {
+        this.name = name;
+        this.address = address;
+        this.group = group;
+        this.age = age;
+        this.contact = contact;
+        this.lod = lod;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + ", Age: " + age + ", Address: " + address +
+               ", Contact: " + contact + ", Blood Group: " + group + 
+               ", Last Donation (months ago): " + lod;
+    }
+
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter how many records you want:");
+        int n = s.nextInt();
+        s.nextLine(); // Consume newline left-over
+
+        // Writing to file
+        try (ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("save.txt"))) {
+            for (int i = 0; i < n; i++) {
+                System.out.println("Name: ");
+                String name = s.nextLine();
+                System.out.println("Age: ");
+                int age = s.nextInt();
+                s.nextLine(); // Consume newline
+                System.out.println("Address: ");
+                String address = s.nextLine();
+                System.out.println("Contact: ");
+                int contact = s.nextInt();
+                System.out.println("Blood Group: ");
+                String group = s.next();
+                System.out.println("Months since Last Donation: ");
+                int lod = s.nextInt();
+                s.nextLine(); // Consume newline
+
+                Donor donor = new Donor(name, address, group, age, contact, lod);
+                o.writeObject(donor); // Write the donor object to the file
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+
+        // Reading from file
+        try (ObjectInputStream z = new ObjectInputStream(new FileInputStream("save.txt"))) {
+            for (int i = 0; i < n; i++) {
+                Donor d = (Donor) z.readObject();
+                // Check for blood group 'A+ve' and not donated in the last 6 months
+                if (d.group.equals("A+ve") && d.lod >= 6) {
+                    System.out.println(d); // Print donor details
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading from file: " + e.getMessage());
+        }
+    }
+}
+
+
+// javac Donor.java
+// java Donor
