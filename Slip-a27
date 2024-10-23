@@ -1,0 +1,117 @@
+// Define an Employee class with suitable attributes having getSalary() method, 
+// which returns salary withdrawn by a particular employee. Write a class Manager which 
+// extends a class Employee, override the getSalary() method, which will return salary of 
+// manager by adding traveling allowance, house rent allowance etc. 
+import java.util.Scanner;
+
+class Employee {
+    int basicSalary = 35000;
+
+    public int getSalary() {
+        return basicSalary; // Return the basic salary
+    }
+}
+
+class Manager extends Employee {
+    int travelingAllowance = 2000;
+    int houseRentAllowance = 5000;
+
+    @Override
+    public int getSalary() {
+        // Calculate total salary for the manager
+        return basicSalary + travelingAllowance + houseRentAllowance;
+    }
+
+    public void displayDetails() {
+        System.out.println("Basic Salary: " + basicSalary);
+        System.out.println("Traveling Allowance: " + travelingAllowance);
+        System.out.println("House Rent Allowance: " + houseRentAllowance);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Press 1 for Employee Salary and 0 for Manager Salary");
+        int choice = sc.nextInt();
+
+        if (choice == 1) {
+            Employee employee = new Employee();
+            System.out.println("Employee Salary: " + employee.getSalary());
+        } else if (choice == 0) {
+            Manager manager = new Manager();
+            System.out.println("Manager Salary: " + manager.getSalary());
+            manager.displayDetails(); // Display additional details for Manager
+        } else {
+            System.out.println("Entered Wrong Choice");
+        }
+
+        sc.close(); // Close the scanner
+    }
+}
+
+// javac Main.java
+// java Main
+
+
+// : Write a program to accept a string as command line argument and check 
+// whether it is a file or directory. Also perform operations as follows: 
+// i) If it is a directory,delete all text files in that directory. Confirm delete 
+// operation from user before deleting text files. Also, display a count showing 
+// the number of files deleted, if any, from the directory. 
+// ii) If it is a file display various details of that file. import java.util.*; 
+import java.io.*; 
+
+class Slip27_2 { 
+    public static void main(String[] args) { 
+        // Check if command line arguments are provided
+        if (args.length == 0) {
+            System.out.println("Please provide a file or directory name as a command line argument.");
+            return;
+        }
+
+        String fname = args[0]; 
+        File f = new File(fname); 
+
+        if (f.isFile()) { 
+            System.out.println("File Name: " + f.getName()); 
+            System.out.println("File Length: " + f.length() + " bytes"); 
+            System.out.println("File Absolute Path: " + f.getAbsolutePath()); 
+            System.out.println("File Path: " + f.getPath()); 
+        } 
+        else if (f.isDirectory()) { 
+            System.out.println("You are about to delete all text files in this directory.");
+            System.out.print("Do you want to proceed? (Press 1 to confirm): "); 
+            Scanner sc = new Scanner(System.in); 
+            int n = sc.nextInt(); 
+
+            if (n == 1) { 
+                String[] s1 = f.list(); 
+                String ext = ".txt"; 
+                int deletedCount = 0; 
+
+                for (String str : s1) { 
+                    if (str.endsWith(ext)) { 
+                        File f1 = new File(f, str); 
+                        if (f1.delete()) {
+                            System.out.println(str + " --> Deleted"); 
+                            deletedCount++;
+                        } else {
+                            System.out.println("Failed to delete " + str); 
+                        }
+                    } 
+                } 
+                System.out.println("Total files deleted: " + deletedCount); 
+            } else { 
+                System.out.println("Delete operation cancelled."); 
+            } 
+        } else { 
+            System.out.println("The specified path is neither a file nor a directory."); 
+        }  
+    }  
+}
+
+
+// javac Slip27_2.java
+//  java Slip27_2 
+
