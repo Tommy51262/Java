@@ -1,0 +1,168 @@
+// Write a program to create an abstract class named Shape that contains 
+// two integers and an empty method named printArea(). Provide three classes 
+// named Rectangle, Triangle and Circle such that each one of the classes 
+// extends the class Shape. Each one of the classes contain only the method 
+// printArea() that prints the area of the given shape. (use method overriding). 
+ 
+ import java.util.*;
+
+// Abstract class Shape
+abstract class Shape {
+    int n1, n2;
+
+    public abstract void printArea();
+}
+
+// Rectangle class
+class Rectangle extends Shape {
+    Rectangle(int a, int b) {
+        n1 = a;
+        n2 = b;
+    }
+
+    public void printArea() {
+        float area = n1 * n2;
+        System.out.println("Area of rectangle = " + area);
+    }
+}
+
+// Triangle class
+class Triangle extends Shape {
+    Triangle(int a, int b) {
+        n1 = a;
+        n2 = b;
+    }
+
+    public void printArea() {
+        float area = (n1 * n2) / 2.0f; // Use float division
+        System.out.println("Area of triangle = " + area);
+    }
+}
+
+// Circle class
+class Circle extends Shape {
+    Circle(int radius) {
+        n1 = radius; // n1 used for radius
+    }
+
+    public void printArea() {
+        float area = (float) (3.142 * n1 * n1); // Use float for area
+        System.out.println("Area of circle = " + area);
+    }
+}
+
+// Main class
+class Area {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter two values for Rectangle and Triangle:");
+        int n1 = sc.nextInt();
+        int n2 = sc.nextInt();
+
+        Rectangle ob = new Rectangle(n1, n2);
+        ob.printArea();
+
+        Triangle tr = new Triangle(n1, n2);
+        tr.printArea();
+
+        System.out.println("Enter the radius for Circle:");
+        int radius = sc.nextInt();
+        Circle cr = new Circle(radius);
+        cr.printArea();
+    }
+}
+
+//javac Area.java
+//java Area
+
+// Write a program that handles all mouse events and shows the event name at 
+// the center of the Window, red in color when a mouse event is fired. (Use adapter classes). 
+   import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+class MouseEvents extends JFrame implements MouseListener, MouseMotionListener {
+    String str = "";
+    JTextArea ta;
+    Container c;
+
+    MouseEvents() {
+        c = getContentPane();
+        c.setLayout(new FlowLayout());
+
+        ta = new JTextArea("Click the mouse or move it", 5, 20);
+        ta.setFont(new Font("Arial", Font.BOLD, 30));
+        ta.setForeground(new Color(255, 0, 0));
+        ta.setEditable(false); // Make the text area non-editable
+        c.add(ta);
+
+        ta.addMouseListener(this);
+        ta.addMouseMotionListener(this);
+    }
+
+    public void mouseClicked(MouseEvent me) {
+        int i = me.getButton();
+        if (i == MouseEvent.BUTTON1) // Left button
+            str = "Clicked Button: Left";
+        else if (i == MouseEvent.BUTTON2) // Middle button
+            str = "Clicked Button: Middle";
+        else if (i == MouseEvent.BUTTON3) // Right button
+            str = "Clicked Button: Right";
+        display();
+    }
+
+    public void mouseEntered(MouseEvent me) {
+        str = "Mouse Entered";
+        display();
+    }
+
+    public void mouseExited(MouseEvent me) {
+        str = "Mouse Exited";
+        display();
+    }
+
+    public void mousePressed(MouseEvent me) {
+        int x = me.getX();
+        int y = me.getY();
+        str = "Mouse Pressed at: " + x + "\t" + y;
+        display();
+    }
+
+    public void mouseReleased(MouseEvent me) {
+        int x = me.getX();
+        int y = me.getY();
+        str = "Mouse Released at: " + x + "\t" + y;
+        display();
+    }
+
+    public void mouseDragged(MouseEvent me) {
+        int x = me.getX();
+        int y = me.getY();
+        str = "Mouse Dragged at: " + x + "\t" + y;
+        display();
+    }
+
+    public void mouseMoved(MouseEvent me) {
+        int x = me.getX();
+        int y = me.getY();
+        str = "Mouse Moved at: " + x + "\t" + y;
+        display();
+    }
+
+    public void display() {
+        ta.setText(str);
+        ta.setCaretPosition(0); // Scroll to the top
+    }
+
+    public static void main(String[] args) {
+        MouseEvents mes = new MouseEvents();
+        mes.setSize(400, 400);
+        mes.setVisible(true);
+        mes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+}
+
+
+//javac MouseEvents.java
+//java MouseEvents
