@@ -1,0 +1,125 @@
+Write a program that reads on file name from the user, then displays 
+information about whether the file exists, whether the file is readable, whether the file 
+is writable, the type of file and the length of the file in bytes. 
+ 
+import java.util.Scanner;
+import java.io.File;
+
+class FileChecker {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter file name:");
+        
+        String fileName = sc.next();
+        File file = new File(fileName);
+        
+        // Check if the file exists
+        if (file.exists()) {
+            System.out.println("Name of the File: " + file.getName());
+            
+            // Check if the file is readable
+            if (file.canRead()) {
+                System.out.println("File is readable.");
+            } else {
+                System.out.println("File is not readable.");
+            }
+            
+            // Check if the file is writable
+            if (file.canWrite()) {
+                System.out.println("File is writable.");
+            } else {
+                System.out.println("File is not writable.");
+            }
+            
+            // Display the type of file
+            if (file.isDirectory()) {
+                System.out.println("It is a directory.");
+            } else {
+                System.out.println("It is a file.");
+            }
+            
+            // Display the length of the file in bytes
+            System.out.println("Length of the file: " + file.length() + " bytes");
+        } else {
+            System.out.println("File not found!");
+        }
+        
+        sc.close();
+    }
+}
+
+
+
+// Slip28_2: 
+// Write a program called SwingTemperatureConverter to convert temperature 
+// values between Celsius and Fahrenheit. User can enter either the Celsius or the 
+// Fahrenheit value, in floating-point number. Hints: To display a floating-point number in 
+// a specific format (e.g., 1 decimal place), use the static method String.format(), which has 
+// the same form 
+// as printf(). For example, String.format("%.1f", 1.234) returns String "1.2".
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class SwingTemperatureConverter extends JFrame implements KeyListener {
+    JLabel celsiusLabel, fahrenheitLabel;
+    JTextField celsiusField, fahrenheitField;
+
+    SwingTemperatureConverter() {
+        // Set up the frame
+        setTitle("Temperature Converter");
+        setLayout(new FlowLayout());
+        setSize(300, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Create components
+        celsiusLabel = new JLabel("Celsius");
+        fahrenheitLabel = new JLabel("Fahrenheit");
+        celsiusField = new JTextField(10);
+        fahrenheitField = new JTextField(10);
+
+        // Add components to the frame
+        add(celsiusLabel);
+        add(celsiusField);
+        add(fahrenheitLabel);
+        add(fahrenheitField);
+
+        // Add key listener to the Celsius field
+        celsiusField.addKeyListener(this);
+
+        // Make the frame visible
+        setVisible(true);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent ke) {
+        try {
+            double celsius = Double.parseDouble(celsiusField.getText());
+            double fahrenheit = (celsius * 1.8) + 32;
+
+            // Format the result to 1 decimal place
+            String formattedFahrenheit = String.format("%.1f", fahrenheit);
+            fahrenheitField.setText(formattedFahrenheit);
+        } catch (NumberFormatException e) {
+            fahrenheitField.setText(""); // Clear the field if input is invalid
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent ke) {
+        // Not used
+    }
+
+    @Override
+    public void keyTyped(KeyEvent ke) {
+        // Not used
+    }
+
+    public static void main(String[] args) {
+        new SwingTemperatureConverter();
+    }
+}
+
+// javac SwingTemperatureConverter.java
+// java SwingTemperatureConverter
